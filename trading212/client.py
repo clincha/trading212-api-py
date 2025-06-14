@@ -133,8 +133,30 @@ class Client:
         :param pie_id: The ID of the pie to delete.
         :return: None if successful, raises HTTPError if the request fails.
         """
-        self.make_backoff_request(
+        return self.make_backoff_request(
             self.base_url + "equity/pies/{}".format(pie_id),
             method='DELETE',
             backoff=5
+        )
+
+    def get_account_cash(self):
+        """
+        Get the cash balance of the account.
+        https://t212public-api-docs.redoc.ly/#operation/accountCash
+        :return: The cash balance as a float.
+        """
+        return self.make_backoff_request(
+            self.base_url + "equity/account/cash",
+            backoff=2
+        )
+
+    def get_account_metadata(self):
+        """
+        Get metadata about the account.
+        https://t212public-api-docs.redoc.ly/#operation/accountMetadata
+        :return: A dictionary containing account metadata.
+        """
+        return self.make_backoff_request(
+            self.base_url + "equity/account/info",
+            backoff=2
         )
