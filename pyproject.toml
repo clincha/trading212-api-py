@@ -1,6 +1,6 @@
 [project]
 name = "trading212-api-py"
-version = "0.0.3"
+version = "0.0.4"
 authors = [
   { name="Angus Clinch", email="angus.clinch@gmail.com" },
 ]

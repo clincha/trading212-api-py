@@ -3,6 +3,8 @@
 name: Build and Publish
 on:
   push:
+concurrency:
+  group: ${{ github.workflow }}
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -57,6 +59,7 @@ jobs:
 
   publish-to-test-pypi:
     name: Publish to Test PyPI
+    if: ${{ !startsWith(github.ref, 'refs/tags/') }}
     needs:
       - build
     runs-on: ubuntu-latest
