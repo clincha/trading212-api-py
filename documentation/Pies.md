@@ -73,7 +73,7 @@ JSON object representing a pie.
 | dividendCashAction | string | Action to take with dividends, can be "REINVEST" or "TO_ACCOUNT_CASH". | REINVEST                            |
 | endDate            | string | End date for the pie in ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ).        | 2025-06-19F12:05:08Z                |
 | goal               | string | Goal amount in the account currency.                                   | 1000                                |
-| icon               | string | URL of the icon for the pie.                                           |                                     |
+| icon               | string | URL of the icon for the pie.                                           | Unicorn                             |
 | instrumentShares   | object | Dictionary of instrument IDs and their corresponding target weight.    | {"RPIl_EQ": 0.5, "NVDA_US_EQ": 0.5} |
 
 ### Returns
@@ -199,7 +199,7 @@ The ID of the pie to update and a JSON object representing the changes to make t
 | dividendCashAction | string | Action to take with dividends, can be "REINVEST" or "TO_ACCOUNT_CASH". | REINVEST                            |
 | endDate            | string | End date for the pie in ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ).        | 2025-06-19F12:05:08Z                |
 | goal               | string | Goal amount in the account currency.                                   | 1000                                |
-| icon               | string | URL of the icon for the pie.                                           |                                     |
+| icon               | string | URL of the icon for the pie.                                           | Unicorn                             |
 | instrumentShares   | object | Dictionary of instrument IDs and their corresponding target weight.    | {"RPIl_EQ": 0.5, "NVDA_US_EQ": 0.5} |
 
 ### Returns
