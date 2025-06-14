@@ -3,8 +3,6 @@ import json
 import os
 import unittest
 
-import pytest
-
 from trading212 import client
 from dotenv import load_dotenv
 
