@@ -1,0 +1,42 @@
+{
+  "instruments": [
+    {
+      "ticker": "AAPL_US_EQ",
+      "result": {
+        "priceAvgInvestedValue": 0,
+        "priceAvgValue": 0,
+        "priceAvgResult": 0,
+        "priceAvgResultCoef": 0
+      },
+      "expectedShare": 0.5,
+      "currentShare": 0,
+      "ownedQuantity": 0.0,
+      "issues": []
+    },
+    {
+      "ticker": "RPIl_EQ",
+      "result": {
+        "priceAvgInvestedValue": 0,
+        "priceAvgValue": 0,
+        "priceAvgResult": 0,
+        "priceAvgResultCoef": 0
+      },
+      "expectedShare": 0.5,
+      "currentShare": 0,
+      "ownedQuantity": 0.0,
+      "issues": []
+    }
+  ],
+  "settings": {
+    "id": 715872,
+    "instrumentShares": null,
+    "name": "trading212-py-api-test-pie",
+    "icon": "Unicorn",
+    "goal": 1000.0,
+    "creationDate": 1749845179.0,
+    "endDate": null,
+    "initialInvestment": null,
+    "dividendCashAction": "REINVEST",
+    "publicUrl": null
+  }
+}

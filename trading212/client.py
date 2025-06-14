@@ -1,3 +1,6 @@
+import json
+import time
+
 import requests
 
 API_VERSION = "v0"
@@ -15,16 +18,36 @@ class Client:
             'Content-Type': 'application/json'
         }
 
+    def make_backoff_request(self, url, method='GET', data=None, backoff=30):
+        """
+        Make a request with a backoff timer for rate limiting.
+        :param url: The URL to request.
+        :param method: The HTTP method to use (default is GET).
+        :param data: The data to send with the request (for POST/PUT).
+        :param backoff: The number of seconds to wait before retrying on rate limit.
+        :return: The response from the request.
+        """
+        response = requests.request(method, url, headers=self.headers, json=data)
+        if response.status_code == 429:
+            print(f"Rate limit exceeded. Retrying after {backoff} seconds...")
+            time.sleep(backoff)
+            response = requests.request(method, url, headers=self.headers, json=data)
+        response.raise_for_status()
+
+        if len(response.text) != 0:
+            return response.json()
+        return None
+
     def get_exchanges(self):
         """
         Get a list of available exchanges.
         https://t212public-api-docs.redoc.ly/#operation/exchanges
         :return: A list of exchanges.
         """
-        response = requests.get(self.base_url + "equity/metadata/exchanges", headers=self.headers)
-        response.raise_for_status()
-        return response.json()
-
+        return self.make_backoff_request(
+            self.base_url + "equity/metadata/exchanges",
+            backoff=30
+        )
 
     def get_instruments(self):
         """
@@ -32,9 +55,10 @@ class Client:
         https://t212public-api-docs.redoc.ly/#operation/instruments
         :return: A list of instruments.
         """
-        response = requests.get(self.base_url + "equity/metadata/instruments", headers=self.headers)
-        response.raise_for_status()
-        return response.json()
+        return self.make_backoff_request(
+            self.base_url + "equity/metadata/instruments",
+            backoff=30
+        )
 
     def get_pies(self):
         """
@@ -42,9 +66,10 @@ class Client:
         https://t212public-api-docs.redoc.ly/#operation/pies
         :return: A list of pies.
         """
-        response = requests.get(self.base_url + "equity/pies", headers=self.headers)
-        response.raise_for_status()
-        return response.json()
+        return self.make_backoff_request(
+            self.base_url + "equity/pies",
+            backoff=30
+        )
 
     def create_pie(self, pie):
         """
@@ -53,6 +78,64 @@ class Client:
         :param pie: JSON object representing pie to create. See the API documentation for the required fields.
         :return: The created pie.
         """
-        response = requests.post(self.base_url + "equity/pies", headers=self.headers, json=pie)
-        response.raise_for_status()
-        return response.json()
+        return self.make_backoff_request(
+            self.base_url + "equity/pies",
+            method='POST',
+            data=pie,
+            backoff=5
+        )
+
+    def get_pie(self, pie_id):
+        """
+        Get a specific pie by its ID.
+        https://t212public-api-docs.redoc.ly/#operation/getDetailed
+        :param pie_id: The ID of the pie to retrieve.
+        :return: The pie with the specified ID.
+        """
+        return self.make_backoff_request(
+            self.base_url + "equity/pies/{}".format(pie_id),
+            backoff=5
+        )
+
+    def update_pie(self, pie_id, updated_pie):
+        """
+        Update an existing pie.
+        https://t212public-api-docs.redoc.ly/#operation/update
+        :param pie_id: The ID of the pie to update.
+        :param updated_pie: JSON object representing the updated pie. See the API documentation for the required fields.
+        :return: The updated pie.
+        """
+        return self.make_backoff_request(
+            self.base_url + "equity/pies/{}".format(pie_id),
+            method='POST',
+            data=updated_pie,
+            backoff=5
+        )
+
+    def duplicate_pie(self, pie_id, duplicated_pie):
+        """
+        Duplicate an existing pie.
+        https://t212public-api-docs.redoc.ly/#operation/duplicatePie
+        :param pie_id: The ID of the pie to duplicate.
+        :param duplicated_pie: JSON object representing the fields to change. Must include the 'name' field.
+        :return: The duplicated pie.
+        """
+        return self.make_backoff_request(
+            self.base_url + "equity/pies/{}/duplicate".format(pie_id),
+            method='POST',
+            data=duplicated_pie,
+            backoff=5
+        )
+
+    def delete_pie(self, pie_id):
+        """
+        Delete a specific pie by its ID.
+        https://t212public-api-docs.redoc.ly/#operation/delete
+        :param pie_id: The ID of the pie to delete.
+        :return: None if successful, raises HTTPError if the request fails.
+        """
+        self.make_backoff_request(
+            self.base_url + "equity/pies/{}".format(pie_id),
+            method='DELETE',
+            backoff=5
+        )

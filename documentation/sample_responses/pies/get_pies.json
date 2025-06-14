@@ -1,0 +1,19 @@
+[
+  {
+    "id": 715872,
+    "cash": 0.0,
+    "dividendDetails": {
+      "gained": 0.0,
+      "reinvested": 0.0,
+      "inCash": 0.0
+    },
+    "result": {
+      "priceAvgInvestedValue": 0,
+      "priceAvgValue": 0,
+      "priceAvgResult": 0,
+      "priceAvgResultCoef": 0
+    },
+    "progress": 0.0,
+    "status": null
+  }
+]

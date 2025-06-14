@@ -1,0 +1,42 @@
+{
+  "instruments": [
+    {
+      "ticker": "RPIl_EQ",
+      "result": {
+        "priceAvgInvestedValue": 0,
+        "priceAvgValue": 0,
+        "priceAvgResult": 0,
+        "priceAvgResultCoef": 0
+      },
+      "expectedShare": 0.7,
+      "currentShare": 0,
+      "ownedQuantity": 0,
+      "issues": []
+    },
+    {
+      "ticker": "AAPL_US_EQ",
+      "result": {
+        "priceAvgInvestedValue": 0,
+        "priceAvgValue": 0,
+        "priceAvgResult": 0,
+        "priceAvgResultCoef": 0
+      },
+      "expectedShare": 0.3,
+      "currentShare": 0,
+      "ownedQuantity": 0,
+      "issues": []
+    }
+  ],
+  "settings": {
+    "id": 715875,
+    "instrumentShares": null,
+    "name": "Duplicated Pie",
+    "icon": null,
+    "goal": 2000.0,
+    "creationDate": 1749845599.2010345,
+    "endDate": null,
+    "initialInvestment": null,
+    "dividendCashAction": "REINVEST",
+    "publicUrl": null
+  }
+}
