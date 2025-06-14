@@ -4,7 +4,7 @@ This folder contains sample responses for each API method. These samples can be 
 
 ## [Instrument Metadata](Instrument%20Metadata.md)
 
-API documentation: https://t212public-api-docs.redoc.ly/#tag/Instruments-Metadata
+**API documentation**: https://t212public-api-docs.redoc.ly/#tag/Instruments-Metadata
 
 **Methods**
 
@@ -13,7 +13,7 @@ get_instruments
 
 ## [Pies](Pies.md)
 
-API documentation: https://t212public-api-docs.redoc.ly/#tag/Pies
+**API documentation**: https://t212public-api-docs.redoc.ly/#tag/Pies
 
 **Methods**
 
