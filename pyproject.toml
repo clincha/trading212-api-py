@@ -1,0 +1,23 @@
+[project]
+name = "trading212-api-py"
+version = "0.0.1"
+authors = [
+  { name="Angus Clinch", email="angus.clinch@gmail.com" },
+]
+description = "A Python client for the Trading212 API."
+readme = "README.md"
+requires-python = "~=3.13"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "GPL-3.0-or-later"
+license-files = ["LICEN[CS]E*"]
+
+[project.urls]
+Homepage = "https://github.com/clincha/trading212-api-py"
+Issues = "https://github.com/clincha/trading212-api-py/issues"
+
+[build-system]
+requires = ["setuptools ~= 80.9.0"]
+build-backend = "setuptools.build_meta"
