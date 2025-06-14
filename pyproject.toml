@@ -1,12 +1,12 @@
 [project]
 name = "trading212-api-py"
-version = "0.0.2"
+version = "0.0.3"
 authors = [
   { name="Angus Clinch", email="angus.clinch@gmail.com" },
 ]
 description = "A Python client for the Trading212 API."
 readme = "README.md"
-requires-python = "~=3.13"
+requires-python = ">=3.9"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
