@@ -1,5 +1,3 @@
-# Documentation for trading212-api-py
-
 ## [Instrument Metadata](Instrument%20Metadata.md)
 
 get_exchanges  
