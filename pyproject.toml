@@ -1,6 +1,6 @@
 [project]
 name = "trading212-api-py"
-version = "0.0.4"
+version = "" # This is set by the GitHub Actions workflow
 authors = [
   { name="Angus Clinch", email="angus.clinch@gmail.com" },
 ]

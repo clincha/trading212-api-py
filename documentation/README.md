@@ -23,3 +23,13 @@ get_pie
 update_pie  
 duplicate_pie  
 delete_pie  
+
+## [Personal Portfolio](Personal%20Portfolio.md)
+
+**API documentation**: https://t212public-api-docs.redoc.ly/#tag/Personal-Portfolio
+
+**Methods**
+
+get_open_positions
+get_position
+search_position_by_ticker

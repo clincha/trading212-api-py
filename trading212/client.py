@@ -160,3 +160,40 @@ class Client:
             self.base_url + "equity/account/info",
             backoff=2
         )
+
+    def get_open_positions(self):
+        """
+        Get a list of open positions in the account.
+        https://t212public-api-docs.redoc.ly/#operation/portfolio
+        :return: A list of open positions.
+        """
+        return self.make_backoff_request(
+            self.base_url + "equity/portfolio",
+            backoff=5
+        )
+
+    def get_position(self, ticker):
+        """
+        Get details of a specific position by its ticker.
+        https://t212public-api-docs.redoc.ly/#operation/positionByTicker
+        :param ticker: The ticker symbol of the position to retrieve.
+        :return: A dictionary containing the position details.
+        """
+        return self.make_backoff_request(
+            self.base_url + "equity/portfolio/{}".format(ticker),
+            backoff=1
+        )
+
+    def search_position_by_ticker(self, ticker):
+        """
+        Search for a position by its ticker.
+        https://t212public-api-docs.redoc.ly/#operation/positionByTickerV2
+        :param ticker: The ticker symbol to search for.
+        :return: A dictionary containing the position details if found, otherwise an empty dictionary.
+        """
+        return self.make_backoff_request(
+            self.base_url + "equity/portfolio/ticker",
+            method='POST',
+            data={"ticker": ticker},
+            backoff=1
+        )

@@ -1,0 +1,15 @@
+[
+  {
+    "ticker": "TSLA_US_EQ",
+    "quantity": 783.0,
+    "averagePrice": 68.99666667,
+    "currentPrice": 326.92,
+    "ppl": 173484.92,
+    "fxPpl": -1212.72,
+    "initialFillDate": "2019-06-06T17:49:02.000+03:00",
+    "frontend": "SYSTEM",
+    "maxBuy": 3511623.0,
+    "maxSell": 3512406.0,
+    "pieQuantity": 0.0
+  }
+]
