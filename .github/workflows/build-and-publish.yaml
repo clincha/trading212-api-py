@@ -3,6 +3,7 @@
 name: Build and Publish
 on:
   push:
+  workflow_dispatch:
 concurrency:
   group: ${{ github.workflow }}
 jobs:
