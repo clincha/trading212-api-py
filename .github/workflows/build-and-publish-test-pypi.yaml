@@ -32,7 +32,7 @@ jobs:
       - name: Set version in pyproject.toml
         run: |
           version="${{ steps.semantic_version.outputs.version }}"
-          yq -i '.project.version = strenv(version)' pyproject.toml
+          yq -i -t '.project.version = strenv(version)' pyproject.toml
 
       - name: Build package
         run: python -m build
