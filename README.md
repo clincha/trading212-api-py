@@ -17,11 +17,11 @@ See the [documentation](https://github.com/clincha/trading212-api-py/tree/main/d
 
 ## Implementation status
 
-| API                  | Status             | Notes            |
-|----------------------|--------------------|------------------|
-| Instruments Metadata | :white_check_mark: | Completed v0.0.4 |
-| Pies                 | :white_check_mark: | Completed v0.0.4 |
-| Equity Orders        | :x:                | Estimated v1.0.0 |
-| Account Data         | :white_check_mark: | Completed v0.0.4 |
-| Personal Portfolio   | :x:                | Estimated v0.1.0 |
-| Historical items     | :x:                | Estimated v0.2.0 |
+| API                  | Status | Notes            |
+|----------------------|--------|------------------|
+| Instruments Metadata | ✅      | Completed v0.0.4 |
+| Pies                 | ✅      | Completed v0.0.4 |
+| Equity Orders        | ❌      | Estimated v1.0.0 |
+| Account Data         | ✅      | Completed v0.0.4 |
+| Personal Portfolio   | ✅      | Completed v0.1.0 |
+| Historical items     | ❌      | Estimated v0.2.0 |
