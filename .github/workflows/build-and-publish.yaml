@@ -85,9 +85,9 @@ jobs:
         run: |
           version="${{ github.ref_name }}"
           printf "Thank you for using trading212-api-py!\n\n" > release.txt
-          printf "Documentation: https://github.com/clincha/trading212-api-py/tree/${version}/documentation" >> release.txt
-          printf "Date: $(date -u +"%Y-%m-%d %H:%M:%S")" >> release.txt
-          printf "PyPi: https://pypi.org/project/trading212-api-py/${version:1}" >> release.txt
+          printf "Documentation: https://github.com/clincha/trading212-api-py/tree/${version}/documentation\n" >> release.txt
+          printf "Date: $(date -u +"%Y-%m-%d %H:%M:%S")\n" >> release.txt
+          printf "PyPi: https://pypi.org/project/trading212-api-py/${version:1}\n" >> release.txt
           cat release.txt
 
       - name: Upload release.txt
