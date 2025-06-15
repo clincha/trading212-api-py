@@ -26,6 +26,14 @@ jobs:
           pip install -r requirements.txt
           pip install build
 
+      - id: semantic_version
+        uses: paulhatch/semantic-version@v5.4.0
+
+      - name: Set version in pyproject.toml
+        run: |
+          version="${{ steps.semantic_version.outputs.version }}"
+          sed -i "s/^version = .*/version = \"$version\"/" pyproject.toml
+
       - name: Build package
         run: python -m build
 
@@ -35,9 +43,27 @@ jobs:
           name: python-package-distributions
           path: dist/
 
+  release:
+    name: Create Release
+    needs:
+      - build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2.3.2
+        with:
+          body: |
+            **Version**: `${{ steps.semantic_version.outputs.version }}`
+            **Date**: `${{ github.event.release.published_at }}`
+            **PyPi**: https://pypi.org/project/trading212-api-py/
+          files: dist/*
+
   publish:
     name: Publish to PyPI
-    if: startsWith(github.ref, 'refs/tags/')
     needs:
       - build
     runs-on: ubuntu-latest
