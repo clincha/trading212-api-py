@@ -27,6 +27,7 @@ jobs:
       - id: semantic_version
         uses: paulhatch/semantic-version@v5.4.0
         with:
+          tag_prefix: ''
           bump_each_commit: true
 
       - name: Set version in pyproject.toml

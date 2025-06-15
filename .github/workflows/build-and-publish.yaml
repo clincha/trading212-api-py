@@ -28,6 +28,8 @@ jobs:
 
       - id: semantic_version
         uses: paulhatch/semantic-version@v5.4.0
+        with:
+          tag_prefix: 'v'
 
       - name: Set version in pyproject.toml
         run: |
