@@ -56,13 +56,16 @@ jobs:
           name: python-package-distributions
           path: dist/
 
+      - name: Create release.txt
+        run: |
+          echo "Version: ${{ github.ref_name }}" > release.txt
+          echo "Date: $(date -u +"%Y-%m-%d %H:%M:%S")" >> release.txt
+          echo "PyPi: https://pypi.org/project/trading212-api-py/" >> release.txt
+
       - name: Create Release
         uses: softprops/action-gh-release@v2.3.2
         with:
-          body: |
-            **Version**: `${{ steps.semantic_version.outputs.version }}`
-            **Date**: `${{ github.event.release.published_at }}`
-            **PyPi**: https://pypi.org/project/trading212-api-py/
+          body_path: release.txt
           files: dist/*
 
   publish:
