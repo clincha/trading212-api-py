@@ -82,10 +82,9 @@ jobs:
     steps:
       - name: Create release.txt
         run: |
-          # Remove the 'v' prefix from the version tag
           version="${{ github.ref_name }}"
           printf "Thank you for using trading212-api-py!\n\n" > release.txt
-          printf "Documentation: https://github.com/clincha/trading212-api-py/tree/${version}/documentation
+          printf "Documentation: https://github.com/clincha/trading212-api-py/tree/${version}/documentation" >> release.txt
           printf "Date: $(date -u +"%Y-%m-%d %H:%M:%S")" >> release.txt
           printf "PyPi: https://pypi.org/project/trading212-api-py/${version:1}" >> release.txt
           cat release.txt
