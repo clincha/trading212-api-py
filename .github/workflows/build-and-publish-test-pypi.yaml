@@ -1,6 +1,6 @@
 # https://packaging.python.org/en/latest/guides/publishing-package-distribution-releases-using-github-actions-ci-cd-workflows/
 
-name: Build and Publish
+name: Build and Publish to Test PyPI
 on:
   push:
 concurrency:
@@ -22,16 +22,17 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install build
+          pip install build yq
 
-      - uses: paulhatch/semantic-version@v5.4.0
+      - id: semantic_version
+        uses: paulhatch/semantic-version@v5.4.0
         with:
           bump_each_commit: true
 
       - name: Set version in pyproject.toml
         run: |
-          version=${{ steps.semantic_version.outputs.version }}
-          sed -i "s/version = .*/version = \"$version\"/" pyproject.toml
+          version="${{ steps.semantic_version.outputs.version }}"
+          yq -i '.project.version = strenv(version)' pyproject.toml
 
       - name: Build package
         run: python -m build
@@ -66,4 +67,3 @@ jobs:
         uses: pypa/gh-action-pypi-publish@v1.12.4
         with:
           repository-url: https://test.pypi.org/legacy/
-
