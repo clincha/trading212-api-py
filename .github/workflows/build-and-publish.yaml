@@ -95,7 +95,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: release-text
-          path: release/
+          path: release.txt
+          if-no-files-found: 'error'
 
   release:
     name: Create Release
