@@ -74,11 +74,12 @@ jobs:
 
   release-text:
     name: Create Release Text
+    permissions:
+      contents: none
     needs:
       - build
       - publish-test
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/v')
 
     steps:
       - name: Create release.txt
@@ -94,12 +95,12 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: release-text
-          path: release.txt
+          path: release/
 
   release:
     name: Create Release
     permissions:
-      contents: write
+      contents: read
     needs:
       - build
       - publish-test
@@ -120,12 +121,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: release-text
-          path: release.txt
+          path: release/
 
       - name: Create Release
         uses: softprops/action-gh-release@v2.3.2
         with:
-          body_path: release.txt
+          body_path: release/release.txt
           files: dist/*
 
   publish:
