@@ -78,7 +78,6 @@ jobs:
       contents: none
     needs:
       - build
-      - publish-test
     runs-on: ubuntu-latest
 
     steps:
@@ -104,6 +103,7 @@ jobs:
     needs:
       - build
       - publish-test
+      - release-text
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v')
 
