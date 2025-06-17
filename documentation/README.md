@@ -30,6 +30,6 @@ delete_pie
 
 **Methods**
 
-get_open_positions
-get_position
-search_position_by_ticker
+get_open_positions  
+get_position  
+search_position_by_ticker  
