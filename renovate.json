@@ -39,6 +39,19 @@
       "automerge": false
     },
     {
+      "description": "The artifact actions are a matched pair — download-artifact v8 exists to serve upload-artifact v7's direct uploads — so they move in one PR rather than drifting apart.",
+      "matchManagers": ["github-actions"],
+      "matchDepNames": ["actions/upload-artifact", "actions/download-artifact"],
+      "groupName": "artifact actions"
+    },
+    {
+      "description": "download-artifact appears only in tag-gated jobs, so a green PR cannot prove the pair still works together. A break would surface at release.",
+      "matchManagers": ["github-actions"],
+      "matchDepNames": ["actions/upload-artifact", "actions/download-artifact"],
+      "matchUpdateTypes": ["major"],
+      "automerge": false
+    },
+    {
       "description": "These actions run only on a v* tag, so a green PR proves nothing about them. A major would automerge clean and surface as a broken release.",
       "matchManagers": ["github-actions"],
       "matchDepNames": [
