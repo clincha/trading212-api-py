@@ -1,0 +1,15 @@
+{
+  "items": [
+    {
+      "ticker": "AAPL_US_EQ",
+      "reference": "DIV-19238471",
+      "type": "ORDINARY",
+      "quantity": 12.0,
+      "grossAmountPerShare": 0.25,
+      "amount": 2.31,
+      "amountInEuro": 2.68,
+      "paidOn": "2026-08-01T09:00:00.000+03:00"
+    }
+  ],
+  "nextPagePath": null
+}

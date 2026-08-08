@@ -1,0 +1,17 @@
+{
+  "items": [
+    {
+      "type": "DEPOSIT",
+      "reference": "d-19238471",
+      "amount": 500.0,
+      "dateTime": "2026-07-30T18:24:53.000+03:00"
+    },
+    {
+      "type": "FEE",
+      "reference": "f-19238502",
+      "amount": -0.7,
+      "dateTime": "2026-08-01T00:00:00.000+03:00"
+    }
+  ],
+  "nextPagePath": "/api/v0/history/transactions?cursor=c3e50994-7d6f-47c0-b3f9-40f8ba1733f6&limit=50"
+}
