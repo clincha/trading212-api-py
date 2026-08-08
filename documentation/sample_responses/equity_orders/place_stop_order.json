@@ -1,0 +1,14 @@
+{
+  "id": 3428957192,
+  "ticker": "AAPL_US_EQ",
+  "type": "STOP",
+  "status": "NEW",
+  "strategy": "QUANTITY",
+  "quantity": -1.0,
+  "filledQuantity": 0.0,
+  "value": null,
+  "filledValue": null,
+  "limitPrice": null,
+  "stopPrice": 190.0,
+  "creationTime": "2026-08-08T10:19:44.000+03:00"
+}

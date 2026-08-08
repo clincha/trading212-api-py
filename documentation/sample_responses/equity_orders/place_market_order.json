@@ -1,0 +1,14 @@
+{
+  "id": 3428957004,
+  "ticker": "AAPL_US_EQ",
+  "type": "MARKET",
+  "status": "FILLED",
+  "strategy": "QUANTITY",
+  "quantity": 1.0,
+  "filledQuantity": 1.0,
+  "value": null,
+  "filledValue": 213.47,
+  "limitPrice": null,
+  "stopPrice": null,
+  "creationTime": "2026-08-08T10:17:02.000+03:00"
+}
