@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
-  "enabledManagers": ["pep621", "pip_requirements", "github-actions"],
+  "enabledManagers": ["pep621", "pyenv", "github-actions"],
   "dependencyDashboard": false,
   "prConcurrentLimit": 3,
   "prHourlyLimit": 2,
@@ -10,25 +10,30 @@
   "automergeStrategy": "squash",
   "platformAutomerge": false,
   "minimumReleaseAge": "3 days",
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true
+  },
   "packageRules": [
     {
       "description": "Runtime deps stay ranges so consumers keep resolution freedom. Widen only when a release falls outside the declared range, so routine upstream patches raise no PR at all.",
-      "matchManagers": ["pep621"],
+      "matchDepTypes": ["project.dependencies"],
       "rangeStrategy": "widen"
     },
     {
       "description": "A runtime major both changes behaviour the suite does not cover and narrows what downstream can resolve, so it stops for a human.",
-      "matchManagers": ["pep621"],
+      "matchDepTypes": ["project.dependencies"],
       "matchUpdateTypes": ["major"],
       "automerge": false
     },
     {
-      "description": "Dev-only pins never reach the published metadata, and the test job gates them, so majors ride along too.",
-      "matchManagers": ["pip_requirements"],
-      "groupName": "test dependencies"
+      "description": "Dev deps never reach the published metadata and the test job gates them, so majors ride along too. Bumping rather than widening keeps them visible as their own PR instead of arriving silently in a lockfile refresh.",
+      "matchDepTypes": ["dependency-groups"],
+      "groupName": "test dependencies",
+      "rangeStrategy": "bump"
     },
     {
-      "description": "The interpreter arrives as setup-python's python-version and is exercised by nothing but CI itself, so a version move stops for a human.",
+      "description": "The interpreter surfaces as both .python-version and setup-uv's resolution, and is exercised by nothing but CI itself, so a version move stops for a human.",
       "matchDepNames": ["python"],
       "matchUpdateTypes": ["major", "minor"],
       "automerge": false

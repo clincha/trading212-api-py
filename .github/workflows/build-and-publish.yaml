@@ -17,22 +17,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
-      - name: Setup Python
-        uses: actions/setup-python@v6
+      # setup-uv publishes no floating major tag, so this has to be an exact pin.
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v9.0.0
         with:
-          python-version: "3.13"
+          enable-cache: true
 
-      - name: Set placeholder version
-        run: sed -i 's/^version = .*/version = "0.0.0"/' pyproject.toml
-
-      # Installing the package rather than requirements.txt is what proves pyproject's runtime deps are complete.
-      - name: Install package and test dependencies
-        run: |
-          pip install .
-          pip install -r requirements.txt
+      # --locked fails the build if uv.lock drifts from pyproject.toml, which is what stops
+      # a dependency bump merging with a stale lock. Syncing the project itself is also what
+      # proves the runtime deps in pyproject are complete.
+      - name: Install project and test dependencies
+        run: uv sync --locked
 
       - name: Run offline tests
-        run: pytest tests/test_client.py
+        run: uv run pytest tests/test_client.py
 
   build:
     name: Build
@@ -46,15 +44,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
-      - name: Setup Python
-        uses: actions/setup-python@v6
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v9.0.0
         with:
-          python-version: "3.13"
-
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-          pip install build
+          enable-cache: true
 
       - id: semantic_version
         uses: paulhatch/semantic-version@v5.4.0
@@ -67,7 +60,7 @@ jobs:
           sed -i "s/^version = .*/version = \"$version\"/" pyproject.toml
 
       - name: Build package
-        run: python -m build
+        run: uv build
 
       - name: Store the distribution packages
         uses: actions/upload-artifact@v4
