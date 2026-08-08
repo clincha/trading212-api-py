@@ -1,0 +1,48 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "enabledManagers": ["pep621", "pip_requirements", "github-actions"],
+  "dependencyDashboard": false,
+  "prConcurrentLimit": 3,
+  "prHourlyLimit": 2,
+  "automerge": true,
+  "automergeType": "pr",
+  "automergeStrategy": "squash",
+  "platformAutomerge": false,
+  "minimumReleaseAge": "3 days",
+  "packageRules": [
+    {
+      "description": "Runtime deps stay ranges so consumers keep resolution freedom. Widen only when a release falls outside the declared range, so routine upstream patches raise no PR at all.",
+      "matchManagers": ["pep621"],
+      "rangeStrategy": "widen"
+    },
+    {
+      "description": "A runtime major both changes behaviour the suite does not cover and narrows what downstream can resolve, so it stops for a human.",
+      "matchManagers": ["pep621"],
+      "matchUpdateTypes": ["major"],
+      "automerge": false
+    },
+    {
+      "description": "Dev-only pins never reach the published metadata, and the test job gates them, so majors ride along too.",
+      "matchManagers": ["pip_requirements"],
+      "groupName": "test dependencies"
+    },
+    {
+      "description": "The interpreter arrives as setup-python's python-version and is exercised by nothing but CI itself, so a version move stops for a human.",
+      "matchDepNames": ["python"],
+      "matchUpdateTypes": ["major", "minor"],
+      "automerge": false
+    },
+    {
+      "description": "These actions run only on a v* tag, so a green PR proves nothing about them. A major would automerge clean and surface as a broken release.",
+      "matchManagers": ["github-actions"],
+      "matchDepNames": [
+        "pypa/gh-action-pypi-publish",
+        "softprops/action-gh-release",
+        "paulhatch/semantic-version"
+      ],
+      "matchUpdateTypes": ["major"],
+      "automerge": false
+    }
+  ]
+}

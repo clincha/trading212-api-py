@@ -7,8 +7,37 @@ on:
 concurrency:
   group: ${{ github.workflow }}
 jobs:
+  test:
+    name: Test
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Set placeholder version
+        run: sed -i 's/^version = .*/version = "0.0.0"/' pyproject.toml
+
+      # Installing the package rather than requirements.txt is what proves pyproject's runtime deps are complete.
+      - name: Install package and test dependencies
+        run: |
+          pip install .
+          pip install -r requirements.txt
+
+      - name: Run offline tests
+        run: pytest tests/test_client.py
+
   build:
     name: Build
+    needs:
+      - test
     permissions:
       contents: read
     runs-on: ubuntu-latest

@@ -7,6 +7,9 @@ authors = [
 description = "A Python client for the Trading212 API."
 readme = "README.md"
 requires-python = ">=3.9"
+dependencies = [
+    "requests>=2.32,<3",
+]
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
