@@ -1,12 +1,17 @@
 [project]
 name = "trading212-api-py"
-version = "" # This is set by the GitHub Actions workflow
+version = "0.0.0" # The real version is set by the GitHub Actions workflow
 authors = [
   { name="Angus Clinch", email="angus.clinch@gmail.com" },
 ]
 description = "A Python client for the Trading212 API."
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
+# Floor is 2.33 because that is the first release carrying the CVE fix, and it is also
+# where requests dropped 3.9 — which is why 3.9 support had to go with it.
+dependencies = [
+    "requests>=2.33,<3",
+]
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
@@ -21,3 +26,9 @@ Issues = "https://github.com/clincha/trading212-api-py/issues"
 [build-system]
 requires = ["setuptools ~= 80.9.0"]
 build-backend = "setuptools.build_meta"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+    "python-dotenv>=1.2.2",
+]

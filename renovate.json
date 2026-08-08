@@ -1,0 +1,66 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "enabledManagers": ["pep621", "pyenv", "github-actions"],
+  "dependencyDashboard": false,
+  "prConcurrentLimit": 3,
+  "prHourlyLimit": 2,
+  "automerge": true,
+  "automergeType": "pr",
+  "automergeStrategy": "squash",
+  "platformAutomerge": false,
+  "minimumReleaseAge": "3 days",
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true
+  },
+  "packageRules": [
+    {
+      "description": "Runtime deps stay ranges so consumers keep resolution freedom. Widen only when a release falls outside the declared range, so routine upstream patches raise no PR at all.",
+      "matchDepTypes": ["project.dependencies"],
+      "rangeStrategy": "widen"
+    },
+    {
+      "description": "A runtime major both changes behaviour the suite does not cover and narrows what downstream can resolve, so it stops for a human.",
+      "matchDepTypes": ["project.dependencies"],
+      "matchUpdateTypes": ["major"],
+      "automerge": false
+    },
+    {
+      "description": "Dev deps never reach the published metadata and the test job gates them, so majors ride along too. Bumping rather than widening keeps them visible as their own PR instead of arriving silently in a lockfile refresh.",
+      "matchDepTypes": ["dependency-groups"],
+      "groupName": "test dependencies",
+      "rangeStrategy": "bump"
+    },
+    {
+      "description": "The interpreter surfaces as both .python-version and setup-uv's resolution, and is exercised by nothing but CI itself, so a version move stops for a human.",
+      "matchDepNames": ["python"],
+      "matchUpdateTypes": ["major", "minor"],
+      "automerge": false
+    },
+    {
+      "description": "The artifact actions are a matched pair — download-artifact v8 exists to serve upload-artifact v7's direct uploads — so they move in one PR rather than drifting apart.",
+      "matchManagers": ["github-actions"],
+      "matchDepNames": ["actions/upload-artifact", "actions/download-artifact"],
+      "groupName": "artifact actions"
+    },
+    {
+      "description": "download-artifact appears only in tag-gated jobs, so a green PR cannot prove the pair still works together. A break would surface at release.",
+      "matchManagers": ["github-actions"],
+      "matchDepNames": ["actions/upload-artifact", "actions/download-artifact"],
+      "matchUpdateTypes": ["major"],
+      "automerge": false
+    },
+    {
+      "description": "These actions run only on a v* tag, so a green PR proves nothing about them. A major would automerge clean and surface as a broken release.",
+      "matchManagers": ["github-actions"],
+      "matchDepNames": [
+        "pypa/gh-action-pypi-publish",
+        "softprops/action-gh-release",
+        "paulhatch/semantic-version"
+      ],
+      "matchUpdateTypes": ["major"],
+      "automerge": false
+    }
+  ]
+}
