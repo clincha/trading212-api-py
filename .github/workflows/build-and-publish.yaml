@@ -41,8 +41,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # semantic-version reads tag history to find the previous release, and checkout fetches
+      # neither tags nor history by default, which is why builds computed 0.0.1 from scratch.
       - name: Checkout code
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          filter: blob:none
 
       - name: Setup uv
         uses: astral-sh/setup-uv@v9.0.0
