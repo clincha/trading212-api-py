@@ -1,0 +1,23 @@
+{
+  "id": 53150556581,
+  "strategy": "QUANTITY",
+  "type": "STOP_LIMIT",
+  "ticker": "AAPL_US_EQ",
+  "quantity": 1,
+  "filledQuantity": 0,
+  "limitPrice": 265.0,
+  "stopPrice": 260.0,
+  "status": "NEW",
+  "currency": "EUR",
+  "extendedHours": false,
+  "initiatedFrom": "API",
+  "side": "BUY",
+  "timeInForce": "DAY",
+  "createdAt": "2026-08-09T08:48:58.052+03:00",
+  "instrument": {
+    "ticker": "AAPL_US_EQ",
+    "name": "Apple",
+    "isin": "US0378331005",
+    "currency": "USD"
+  }
+}

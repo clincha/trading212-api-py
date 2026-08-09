@@ -139,6 +139,128 @@ class Client:
             backoff=5
         )
 
+    def get_orders(self):
+        """
+        Get a list of all pending orders.
+        https://t212public-api-docs.redoc.ly/#operation/orders
+        :return: A list of pending orders.
+        """
+        return self.make_backoff_request(
+            self.base_url + "equity/orders",
+            backoff=5
+        )
+
+    def place_limit_order(self, ticker, quantity, limit_price, time_validity="DAY"):
+        """
+        Place a limit order.
+        https://t212public-api-docs.redoc.ly/#operation/placeLimitOrder
+        :param ticker: The ticker of the instrument to trade.
+        :param quantity: The quantity to trade. Negative values sell.
+        :param limit_price: The price at or better than which the order should fill.
+        :param time_validity: How long the order stays live: 'DAY' or 'GOOD_TILL_CANCEL'.
+        :return: The placed order.
+        """
+        return self.make_backoff_request(
+            self.base_url + "equity/orders/limit",
+            method='POST',
+            data={
+                "ticker": ticker,
+                "quantity": quantity,
+                "limitPrice": limit_price,
+                "timeValidity": time_validity
+            },
+            backoff=2
+        )
+
+    def place_market_order(self, ticker, quantity):
+        """
+        Place a market order.
+        https://t212public-api-docs.redoc.ly/#operation/placeMarketOrder
+        :param ticker: The ticker of the instrument to trade.
+        :param quantity: The quantity to trade. Negative values sell.
+        :return: The placed order.
+        """
+        return self.make_backoff_request(
+            self.base_url + "equity/orders/market",
+            method='POST',
+            data={
+                "ticker": ticker,
+                "quantity": quantity
+            },
+            backoff=1
+        )
+
+    def place_stop_order(self, ticker, quantity, stop_price, time_validity="DAY"):
+        """
+        Place a stop order.
+        https://t212public-api-docs.redoc.ly/#operation/placeStopOrder_1
+        :param ticker: The ticker of the instrument to trade.
+        :param quantity: The quantity to trade. Negative values sell.
+        :param stop_price: The price at which the order is released to the market.
+        :param time_validity: How long the order stays live: 'DAY' or 'GOOD_TILL_CANCEL'.
+        :return: The placed order.
+        """
+        return self.make_backoff_request(
+            self.base_url + "equity/orders/stop",
+            method='POST',
+            data={
+                "ticker": ticker,
+                "quantity": quantity,
+                "stopPrice": stop_price,
+                "timeValidity": time_validity
+            },
+            backoff=2
+        )
+
+    def place_stop_limit_order(self, ticker, quantity, limit_price, stop_price, time_validity="DAY"):
+        """
+        Place a stop-limit order.
+        https://t212public-api-docs.redoc.ly/#operation/placeStopOrder
+        :param ticker: The ticker of the instrument to trade.
+        :param quantity: The quantity to trade. Negative values sell.
+        :param limit_price: The price at or better than which the order should fill once released.
+        :param stop_price: The price at which the order is released to the market.
+        :param time_validity: How long the order stays live: 'DAY' or 'GOOD_TILL_CANCEL'.
+        :return: The placed order.
+        """
+        return self.make_backoff_request(
+            self.base_url + "equity/orders/stop_limit",
+            method='POST',
+            data={
+                "ticker": ticker,
+                "quantity": quantity,
+                "limitPrice": limit_price,
+                "stopPrice": stop_price,
+                "timeValidity": time_validity
+            },
+            backoff=2
+        )
+
+    def get_order(self, order_id):
+        """
+        Get a specific pending order by its ID.
+        https://t212public-api-docs.redoc.ly/#operation/orderById
+        :param order_id: The ID of the order to retrieve.
+        :return: The order with the specified ID.
+        """
+        return self.make_backoff_request(
+            self.base_url + "equity/orders/{}".format(order_id),
+            backoff=1
+        )
+
+    def cancel_order(self, order_id):
+        """
+        Cancel a specific pending order by its ID.
+        https://t212public-api-docs.redoc.ly/#operation/cancelOrder
+        :param order_id: The ID of the order to cancel.
+        :return: None if successful, raises HTTPError if the request fails.
+        """
+        return self.make_backoff_request(
+            self.base_url + "equity/orders/{}".format(order_id),
+            method='DELETE',
+            backoff=1
+        )
+
     def get_account_cash(self):
         """
         Get the cash balance of the account.

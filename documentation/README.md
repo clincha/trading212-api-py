@@ -24,6 +24,20 @@ update_pie
 duplicate_pie  
 delete_pie  
 
+## [Equity Orders](Equity%20Orders.md)
+
+**API documentation**: https://t212public-api-docs.redoc.ly/#tag/Equity-Orders
+
+**Methods**
+
+get_orders  
+place_limit_order  
+place_market_order  
+place_stop_order  
+place_stop_limit_order  
+get_order  
+cancel_order  
+
 ## [Personal Portfolio](Personal%20Portfolio.md)
 
 **API documentation**: https://t212public-api-docs.redoc.ly/#tag/Personal-Portfolio
