@@ -8,6 +8,14 @@ Quantity is signed: a positive quantity buys, a negative quantity sells.
 `time_validity` controls how long a resting order stays live and accepts `DAY` or `GOOD_TILL_CANCEL`.
 It defaults to `DAY`.
 
+A placed order is not immediately readable. `get_order` and `cancel_order` both return 404 for
+roughly a second after the placing call has returned the new order's id, so code that places an
+order and then acts on it needs to retry rather than assume the id is usable straight away.
+
+The API rejects orders below a minimum value with `min-quantity-exceeded` — the floor is around
+1.16 EUR and moves with exchange rates, so `quantity * price` needs headroom above it. Stop prices
+more than roughly 30% away from the market price are rejected as `price too far`.
+
 ## Get Orders
 
 ```python
@@ -28,18 +36,26 @@ orders are not included — those come from `get_historical_orders`.
 ```json
 [
   {
-    "id": 3428956871,
-    "ticker": "AAPL_US_EQ",
-    "type": "LIMIT",
-    "status": "NEW",
+    "id": 53150556575,
     "strategy": "QUANTITY",
-    "quantity": 1.0,
-    "filledQuantity": 0.0,
-    "value": null,
-    "filledValue": null,
-    "limitPrice": 100.23,
-    "stopPrice": null,
-    "creationTime": "2026-08-08T10:15:30.000+03:00"
+    "type": "LIMIT",
+    "ticker": "AAPL_US_EQ",
+    "quantity": 1,
+    "filledQuantity": 0,
+    "limitPrice": 10.0,
+    "status": "NEW",
+    "currency": "EUR",
+    "extendedHours": false,
+    "initiatedFrom": "API",
+    "side": "BUY",
+    "timeInForce": "GOOD_TILL_CANCEL",
+    "createdAt": "2026-08-09T08:48:48.878+03:00",
+    "instrument": {
+      "ticker": "AAPL_US_EQ",
+      "name": "Apple",
+      "isin": "US0378331005",
+      "currency": "USD"
+    }
   }
 ]
 ```
@@ -67,18 +83,26 @@ A dictionary representing the placed order.
 
 ```json
 {
-  "id": 3428956871,
-  "ticker": "AAPL_US_EQ",
-  "type": "LIMIT",
-  "status": "NEW",
+  "id": 53150556575,
   "strategy": "QUANTITY",
-  "quantity": 1.0,
-  "filledQuantity": 0.0,
-  "value": null,
-  "filledValue": null,
-  "limitPrice": 100.23,
-  "stopPrice": null,
-  "creationTime": "2026-08-08T10:15:30.000+03:00"
+  "type": "LIMIT",
+  "ticker": "AAPL_US_EQ",
+  "quantity": 1,
+  "filledQuantity": 0,
+  "limitPrice": 10.0,
+  "status": "NEW",
+  "currency": "EUR",
+  "extendedHours": false,
+  "initiatedFrom": "API",
+  "side": "BUY",
+  "timeInForce": "GOOD_TILL_CANCEL",
+  "createdAt": "2026-08-09T08:48:48.878+03:00",
+  "instrument": {
+    "ticker": "AAPL_US_EQ",
+    "name": "Apple",
+    "isin": "US0378331005",
+    "currency": "USD"
+  }
 }
 ```
 
@@ -105,18 +129,24 @@ A dictionary representing the placed order.
 
 ```json
 {
-  "id": 3428957004,
-  "ticker": "AAPL_US_EQ",
-  "type": "MARKET",
-  "status": "FILLED",
+  "id": 53150556577,
   "strategy": "QUANTITY",
-  "quantity": 1.0,
-  "filledQuantity": 1.0,
-  "value": null,
-  "filledValue": 213.47,
-  "limitPrice": null,
-  "stopPrice": null,
-  "creationTime": "2026-08-08T10:17:02.000+03:00"
+  "type": "MARKET",
+  "ticker": "AAPL_US_EQ",
+  "quantity": 1,
+  "filledQuantity": 0,
+  "status": "NEW",
+  "currency": "EUR",
+  "extendedHours": false,
+  "initiatedFrom": "API",
+  "side": "BUY",
+  "createdAt": "2026-08-09T08:48:51.933+03:00",
+  "instrument": {
+    "ticker": "AAPL_US_EQ",
+    "name": "Apple",
+    "isin": "US0378331005",
+    "currency": "USD"
+  }
 }
 ```
 
@@ -143,18 +173,26 @@ A dictionary representing the placed order.
 
 ```json
 {
-  "id": 3428957192,
-  "ticker": "AAPL_US_EQ",
-  "type": "STOP",
-  "status": "NEW",
+  "id": 53150556579,
   "strategy": "QUANTITY",
-  "quantity": -1.0,
-  "filledQuantity": 0.0,
-  "value": null,
-  "filledValue": null,
-  "limitPrice": null,
-  "stopPrice": 190.0,
-  "creationTime": "2026-08-08T10:19:44.000+03:00"
+  "type": "STOP",
+  "ticker": "AAPL_US_EQ",
+  "quantity": 1,
+  "filledQuantity": 0,
+  "stopPrice": 260.0,
+  "status": "NEW",
+  "currency": "EUR",
+  "extendedHours": false,
+  "initiatedFrom": "API",
+  "side": "BUY",
+  "timeInForce": "DAY",
+  "createdAt": "2026-08-09T08:48:54.991+03:00",
+  "instrument": {
+    "ticker": "AAPL_US_EQ",
+    "name": "Apple",
+    "isin": "US0378331005",
+    "currency": "USD"
+  }
 }
 ```
 
@@ -181,18 +219,27 @@ A dictionary representing the placed order.
 
 ```json
 {
-  "id": 3428957338,
-  "ticker": "AAPL_US_EQ",
-  "type": "STOP_LIMIT",
-  "status": "NEW",
+  "id": 53150556581,
   "strategy": "QUANTITY",
-  "quantity": -1.0,
-  "filledQuantity": 0.0,
-  "value": null,
-  "filledValue": null,
-  "limitPrice": 188.5,
-  "stopPrice": 190.0,
-  "creationTime": "2026-08-08T10:21:09.000+03:00"
+  "type": "STOP_LIMIT",
+  "ticker": "AAPL_US_EQ",
+  "quantity": 1,
+  "filledQuantity": 0,
+  "limitPrice": 265.0,
+  "stopPrice": 260.0,
+  "status": "NEW",
+  "currency": "EUR",
+  "extendedHours": false,
+  "initiatedFrom": "API",
+  "side": "BUY",
+  "timeInForce": "DAY",
+  "createdAt": "2026-08-09T08:48:58.052+03:00",
+  "instrument": {
+    "ticker": "AAPL_US_EQ",
+    "name": "Apple",
+    "isin": "US0378331005",
+    "currency": "USD"
+  }
 }
 ```
 
@@ -219,18 +266,26 @@ pending and returns a 404.
 
 ```json
 {
-  "id": 3428956871,
-  "ticker": "AAPL_US_EQ",
-  "type": "LIMIT",
-  "status": "NEW",
+  "id": 53150556575,
   "strategy": "QUANTITY",
-  "quantity": 1.0,
-  "filledQuantity": 0.0,
-  "value": null,
-  "filledValue": null,
-  "limitPrice": 100.23,
-  "stopPrice": null,
-  "creationTime": "2026-08-08T10:15:30.000+03:00"
+  "type": "LIMIT",
+  "ticker": "AAPL_US_EQ",
+  "quantity": 1,
+  "filledQuantity": 0,
+  "limitPrice": 10.0,
+  "status": "NEW",
+  "currency": "EUR",
+  "extendedHours": false,
+  "initiatedFrom": "API",
+  "side": "BUY",
+  "timeInForce": "GOOD_TILL_CANCEL",
+  "createdAt": "2026-08-09T08:48:48.878+03:00",
+  "instrument": {
+    "ticker": "AAPL_US_EQ",
+    "name": "Apple",
+    "isin": "US0378331005",
+    "currency": "USD"
+  }
 }
 ```
 

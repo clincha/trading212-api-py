@@ -1,14 +1,20 @@
 {
-  "id": 3428957004,
-  "ticker": "AAPL_US_EQ",
-  "type": "MARKET",
-  "status": "FILLED",
+  "id": 53150556577,
   "strategy": "QUANTITY",
-  "quantity": 1.0,
-  "filledQuantity": 1.0,
-  "value": null,
-  "filledValue": 213.47,
-  "limitPrice": null,
-  "stopPrice": null,
-  "creationTime": "2026-08-08T10:17:02.000+03:00"
+  "type": "MARKET",
+  "ticker": "AAPL_US_EQ",
+  "quantity": 1,
+  "filledQuantity": 0,
+  "status": "NEW",
+  "currency": "EUR",
+  "extendedHours": false,
+  "initiatedFrom": "API",
+  "side": "BUY",
+  "createdAt": "2026-08-09T08:48:51.933+03:00",
+  "instrument": {
+    "ticker": "AAPL_US_EQ",
+    "name": "Apple",
+    "isin": "US0378331005",
+    "currency": "USD"
+  }
 }
