@@ -24,7 +24,7 @@ Homepage = "https://github.com/clincha/trading212-api-py"
 Issues = "https://github.com/clincha/trading212-api-py/issues"
 
 [build-system]
-requires = ["setuptools ~= 80.9.0"]
+requires = ["setuptools ~=80.10.2"]
 build-backend = "setuptools.build_meta"
 
 [dependency-groups]
