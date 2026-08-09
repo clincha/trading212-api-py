@@ -1,0 +1,12 @@
+{
+  "items": [
+    {
+      "type": "DEPOSIT",
+      "amount": 50000.0,
+      "currency": "EUR",
+      "reference": "920b1a43-b03c-4249-b022-6e160688c532",
+      "dateTime": "2019-06-03T18:52:50.000Z"
+    }
+  ],
+  "nextPagePath": null
+}

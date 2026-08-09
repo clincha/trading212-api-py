@@ -46,4 +46,16 @@ cancel_order
 
 get_open_positions  
 get_position  
-search_position_by_ticker  
+search_position_by_ticker
+
+## [Historical Items](Historical%20Items.md)
+
+**API documentation**: https://t212public-api-docs.redoc.ly/#tag/Historical-items
+
+**Methods**
+
+get_historical_orders  
+get_dividends  
+get_transactions  
+get_exports  
+request_export    

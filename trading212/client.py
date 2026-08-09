@@ -17,20 +17,21 @@ class Client:
             'Content-Type': 'application/json'
         }
 
-    def make_backoff_request(self, url, method='GET', data=None, backoff=30):
+    def make_backoff_request(self, url, method='GET', data=None, params=None, backoff=30):
         """
         Make a request with a backoff timer for rate limiting.
         :param url: The URL to request.
         :param method: The HTTP method to use (default is GET).
         :param data: The data to send with the request (for POST/PUT).
+        :param params: Query parameters. Entries with a value of None are left off the URL.
         :param backoff: The number of seconds to wait before retrying on rate limit.
         :return: The response from the request.
         """
-        response = requests.request(method, url, headers=self.headers, json=data)
+        response = requests.request(method, url, headers=self.headers, json=data, params=params)
         if response.status_code == 429:
             print(f"Rate limit exceeded. Retrying after {backoff} seconds...")
             time.sleep(backoff)
-            response = requests.request(method, url, headers=self.headers, json=data)
+            response = requests.request(method, url, headers=self.headers, json=data, params=params)
         response.raise_for_status()
 
         if len(response.text) != 0:
@@ -318,4 +319,90 @@ class Client:
             method='POST',
             data={"ticker": ticker},
             backoff=1
+        )
+
+    def get_historical_orders(self, cursor=None, ticker=None, limit=None):
+        """
+        Get a page of historical order data.
+        https://t212public-api-docs.redoc.ly/#operation/orders_1
+        :param cursor: Pagination cursor, taken from the 'nextPagePath' of a previous page.
+        :param ticker: Only return orders for this ticker.
+        :param limit: Number of items to return. The API caps this at 50.
+        :return: A dictionary with an 'items' list and a 'nextPagePath'.
+        """
+        return self.make_backoff_request(
+            self.base_url + "equity/history/orders",
+            params={"cursor": cursor, "ticker": ticker, "limit": limit},
+            backoff=10
+        )
+
+    def get_dividends(self, cursor=None, ticker=None, limit=None):
+        """
+        Get a page of paid out dividends.
+        https://t212public-api-docs.redoc.ly/#operation/dividends
+        :param cursor: Pagination cursor, taken from the 'nextPagePath' of a previous page.
+        :param ticker: Only return dividends for this ticker.
+        :param limit: Number of items to return. The API caps this at 50.
+        :return: A dictionary with an 'items' list and a 'nextPagePath'.
+        """
+        return self.make_backoff_request(
+            self.base_url + "history/dividends",
+            params={"cursor": cursor, "ticker": ticker, "limit": limit},
+            backoff=10
+        )
+
+    def get_transactions(self, cursor=None, time_from=None, limit=None):
+        """
+        Get a page of transactions to and from the account.
+        https://t212public-api-docs.redoc.ly/#operation/transactions
+        :param cursor: Pagination cursor, taken from the 'nextPagePath' of a previous page.
+        :param time_from: ISO-8601 timestamp to retrieve transactions from.
+        :param limit: Number of items to return. The API caps this at 50.
+        :return: A dictionary with an 'items' list and a 'nextPagePath'.
+        """
+        return self.make_backoff_request(
+            self.base_url + "history/transactions",
+            params={"cursor": cursor, "time": time_from, "limit": limit},
+            backoff=10
+        )
+
+    def get_exports(self):
+        """
+        Get a list of the CSV exports requested for the account.
+        https://t212public-api-docs.redoc.ly/#operation/getReports
+        :return: A list of exports, each with its status and download link.
+        """
+        return self.make_backoff_request(
+            self.base_url + "history/exports",
+            backoff=60
+        )
+
+    def request_export(self, time_from, time_to, include_dividends=True, include_interest=True,
+                       include_orders=True, include_transactions=True):
+        """
+        Request a CSV export of the account history. The export is queued, so poll get_exports
+        until its status is 'Finished' to pick up the download link.
+        https://t212public-api-docs.redoc.ly/#operation/requestReport
+        :param time_from: ISO-8601 timestamp for the start of the exported period.
+        :param time_to: ISO-8601 timestamp for the end of the exported period.
+        :param include_dividends: Whether to include dividends in the export.
+        :param include_interest: Whether to include interest in the export.
+        :param include_orders: Whether to include orders in the export.
+        :param include_transactions: Whether to include transactions in the export.
+        :return: A dictionary containing the 'reportId' of the queued export.
+        """
+        return self.make_backoff_request(
+            self.base_url + "history/exports",
+            method='POST',
+            data={
+                "timeFrom": time_from,
+                "timeTo": time_to,
+                "dataIncluded": {
+                    "includeDividends": include_dividends,
+                    "includeInterest": include_interest,
+                    "includeOrders": include_orders,
+                    "includeTransactions": include_transactions
+                }
+            },
+            backoff=30
         )
