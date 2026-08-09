@@ -21,7 +21,7 @@ See the [documentation](https://github.com/clincha/trading212-api-py/tree/main/d
 |----------------------|--------|------------------|
 | Instruments Metadata | ✅      | Completed v0.0.4 |
 | Pies                 | ✅      | Completed v0.0.4 |
-| Equity Orders        | ✅      | Completed v0.2.0 |
+| Equity Orders        | ✅      | Completed v1.0.0 |
 | Account Data         | ✅      | Completed v0.0.4 |
 | Personal Portfolio   | ✅      | Completed v0.1.0 |
-| Historical items     | ✅      | Completed v0.2.0 |
+| Historical items     | ✅      | Completed v1.0.0 |
