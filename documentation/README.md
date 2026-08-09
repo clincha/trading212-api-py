@@ -1,10 +1,13 @@
+Each page below documents one area of the API, with the request, the arguments and a real
+sample response for every method.
+
+Trading212's own API reference lives at <https://docs.trading212.com/api>.
+
 ## [Sample Responses](sample_responses)
 
 This folder contains sample responses for each API method. These samples can be used to understand the expected structure of the data returned by the API.
 
 ## [Instrument Metadata](Instrument%20Metadata.md)
-
-**API documentation**: https://t212public-api-docs.redoc.ly/#tag/Instruments-Metadata
 
 **Methods**
 
@@ -12,8 +15,6 @@ get_exchanges
 get_instruments
 
 ## [Pies](Pies.md)
-
-**API documentation**: https://t212public-api-docs.redoc.ly/#tag/Pies
 
 **Methods**
 
@@ -25,8 +26,6 @@ duplicate_pie
 delete_pie  
 
 ## [Equity Orders](Equity%20Orders.md)
-
-**API documentation**: https://t212public-api-docs.redoc.ly/#tag/Equity-Orders
 
 **Methods**
 
@@ -40,8 +39,6 @@ cancel_order
 
 ## [Personal Portfolio](Personal%20Portfolio.md)
 
-**API documentation**: https://t212public-api-docs.redoc.ly/#tag/Personal-Portfolio
-
 **Methods**
 
 get_open_positions  
@@ -49,8 +46,6 @@ get_position
 search_position_by_ticker
 
 ## [Historical Items](Historical%20Items.md)
-
-**API documentation**: https://t212public-api-docs.redoc.ly/#tag/Historical-items
 
 **Methods**
 

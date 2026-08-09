@@ -41,7 +41,7 @@ class Client:
     def get_exchanges(self):
         """
         Get a list of available exchanges.
-        https://t212public-api-docs.redoc.ly/#operation/exchanges
+        https://github.com/clincha/trading212-api-py/blob/main/documentation/Instrument%20Metadata.md#exchanges
         :return: A list of exchanges.
         """
         return self.make_backoff_request(
@@ -52,7 +52,7 @@ class Client:
     def get_instruments(self):
         """
         Get a list of instruments.
-        https://t212public-api-docs.redoc.ly/#operation/instruments
+        https://github.com/clincha/trading212-api-py/blob/main/documentation/Instrument%20Metadata.md#instruments
         :return: A list of instruments.
         """
         return self.make_backoff_request(
@@ -63,7 +63,7 @@ class Client:
     def get_pies(self):
         """
         Get a list of pies.
-        https://t212public-api-docs.redoc.ly/#operation/pies
+        https://github.com/clincha/trading212-api-py/blob/main/documentation/Pies.md#get-pies
         :return: A list of pies.
         """
         return self.make_backoff_request(
@@ -74,7 +74,7 @@ class Client:
     def create_pie(self, pie):
         """
         Create a new pie.
-        https://t212public-api-docs.redoc.ly/#operation/create
+        https://github.com/clincha/trading212-api-py/blob/main/documentation/Pies.md#create-pie
         :param pie: JSON object representing pie to create. See the API documentation for the required fields.
         :return: The created pie.
         """
@@ -88,7 +88,7 @@ class Client:
     def get_pie(self, pie_id):
         """
         Get a specific pie by its ID.
-        https://t212public-api-docs.redoc.ly/#operation/getDetailed
+        https://github.com/clincha/trading212-api-py/blob/main/documentation/Pies.md#get-pie
         :param pie_id: The ID of the pie to retrieve.
         :return: The pie with the specified ID.
         """
@@ -100,7 +100,7 @@ class Client:
     def update_pie(self, pie_id, updated_pie):
         """
         Update an existing pie.
-        https://t212public-api-docs.redoc.ly/#operation/update
+        https://github.com/clincha/trading212-api-py/blob/main/documentation/Pies.md#update-pie
         :param pie_id: The ID of the pie to update.
         :param updated_pie: JSON object representing the updated pie. See the API documentation for the required fields.
         :return: The updated pie.
@@ -115,7 +115,7 @@ class Client:
     def duplicate_pie(self, pie_id, duplicated_pie):
         """
         Duplicate an existing pie.
-        https://t212public-api-docs.redoc.ly/#operation/duplicatePie
+        https://github.com/clincha/trading212-api-py/blob/main/documentation/Pies.md#duplicate-pie
         :param pie_id: The ID of the pie to duplicate.
         :param duplicated_pie: JSON object representing the fields to change. Must include the 'name' field.
         :return: The duplicated pie.
@@ -130,7 +130,7 @@ class Client:
     def delete_pie(self, pie_id):
         """
         Delete a specific pie by its ID.
-        https://t212public-api-docs.redoc.ly/#operation/delete
+        https://github.com/clincha/trading212-api-py/blob/main/documentation/Pies.md#delete-pie
         :param pie_id: The ID of the pie to delete.
         :return: None if successful, raises HTTPError if the request fails.
         """
@@ -143,7 +143,7 @@ class Client:
     def get_orders(self):
         """
         Get a list of all pending orders.
-        https://t212public-api-docs.redoc.ly/#operation/orders
+        https://github.com/clincha/trading212-api-py/blob/main/documentation/Equity%20Orders.md#get-orders
         :return: A list of pending orders.
         """
         return self.make_backoff_request(
@@ -154,7 +154,7 @@ class Client:
     def place_limit_order(self, ticker, quantity, limit_price, time_validity="DAY"):
         """
         Place a limit order.
-        https://t212public-api-docs.redoc.ly/#operation/placeLimitOrder
+        https://github.com/clincha/trading212-api-py/blob/main/documentation/Equity%20Orders.md#place-limit-order
         :param ticker: The ticker of the instrument to trade.
         :param quantity: The quantity to trade. Negative values sell.
         :param limit_price: The price at or better than which the order should fill.
@@ -176,7 +176,7 @@ class Client:
     def place_market_order(self, ticker, quantity):
         """
         Place a market order.
-        https://t212public-api-docs.redoc.ly/#operation/placeMarketOrder
+        https://github.com/clincha/trading212-api-py/blob/main/documentation/Equity%20Orders.md#place-market-order
         :param ticker: The ticker of the instrument to trade.
         :param quantity: The quantity to trade. Negative values sell.
         :return: The placed order.
@@ -194,7 +194,7 @@ class Client:
     def place_stop_order(self, ticker, quantity, stop_price, time_validity="DAY"):
         """
         Place a stop order.
-        https://t212public-api-docs.redoc.ly/#operation/placeStopOrder_1
+        https://github.com/clincha/trading212-api-py/blob/main/documentation/Equity%20Orders.md#place-stop-order
         :param ticker: The ticker of the instrument to trade.
         :param quantity: The quantity to trade. Negative values sell.
         :param stop_price: The price at which the order is released to the market.
@@ -216,7 +216,7 @@ class Client:
     def place_stop_limit_order(self, ticker, quantity, limit_price, stop_price, time_validity="DAY"):
         """
         Place a stop-limit order.
-        https://t212public-api-docs.redoc.ly/#operation/placeStopOrder
+        https://github.com/clincha/trading212-api-py/blob/main/documentation/Equity%20Orders.md#place-stop-limit-order
         :param ticker: The ticker of the instrument to trade.
         :param quantity: The quantity to trade. Negative values sell.
         :param limit_price: The price at or better than which the order should fill once released.
@@ -240,7 +240,7 @@ class Client:
     def get_order(self, order_id):
         """
         Get a specific pending order by its ID.
-        https://t212public-api-docs.redoc.ly/#operation/orderById
+        https://github.com/clincha/trading212-api-py/blob/main/documentation/Equity%20Orders.md#get-order
         :param order_id: The ID of the order to retrieve.
         :return: The order with the specified ID.
         """
@@ -252,7 +252,7 @@ class Client:
     def cancel_order(self, order_id):
         """
         Cancel a specific pending order by its ID.
-        https://t212public-api-docs.redoc.ly/#operation/cancelOrder
+        https://github.com/clincha/trading212-api-py/blob/main/documentation/Equity%20Orders.md#cancel-order
         :param order_id: The ID of the order to cancel.
         :return: None if successful, raises HTTPError if the request fails.
         """
@@ -265,7 +265,7 @@ class Client:
     def get_account_cash(self):
         """
         Get the cash balance of the account.
-        https://t212public-api-docs.redoc.ly/#operation/accountCash
+        https://github.com/clincha/trading212-api-py/blob/main/documentation/Account%20Data.md#get-account-cash
         :return: The cash balance as a float.
         """
         return self.make_backoff_request(
@@ -276,7 +276,7 @@ class Client:
     def get_account_metadata(self):
         """
         Get metadata about the account.
-        https://t212public-api-docs.redoc.ly/#operation/accountMetadata
+        https://github.com/clincha/trading212-api-py/blob/main/documentation/Account%20Data.md#get-account-metadata
         :return: A dictionary containing account metadata.
         """
         return self.make_backoff_request(
@@ -287,7 +287,7 @@ class Client:
     def get_open_positions(self):
         """
         Get a list of open positions in the account.
-        https://t212public-api-docs.redoc.ly/#operation/portfolio
+        https://github.com/clincha/trading212-api-py/blob/main/documentation/Personal%20Portfolio.md#get-open-positions
         :return: A list of open positions.
         """
         return self.make_backoff_request(
@@ -298,7 +298,7 @@ class Client:
     def get_position(self, ticker):
         """
         Get details of a specific position by its ticker.
-        https://t212public-api-docs.redoc.ly/#operation/positionByTicker
+        https://github.com/clincha/trading212-api-py/blob/main/documentation/Personal%20Portfolio.md#get-position
         :param ticker: The ticker symbol of the position to retrieve.
         :return: A dictionary containing the position details.
         """
@@ -310,7 +310,7 @@ class Client:
     def search_position_by_ticker(self, ticker):
         """
         Search for a position by its ticker.
-        https://t212public-api-docs.redoc.ly/#operation/positionByTickerV2
+        https://github.com/clincha/trading212-api-py/blob/main/documentation/Personal%20Portfolio.md#search-position-by-ticker
         :param ticker: The ticker symbol to search for.
         :return: A dictionary containing the position details if found, otherwise an empty dictionary.
         """
@@ -324,7 +324,7 @@ class Client:
     def get_historical_orders(self, cursor=None, ticker=None, limit=None):
         """
         Get a page of historical order data.
-        https://t212public-api-docs.redoc.ly/#operation/orders_1
+        https://github.com/clincha/trading212-api-py/blob/main/documentation/Historical%20Items.md#get-historical-orders
         :param cursor: Pagination cursor, taken from the 'nextPagePath' of a previous page.
         :param ticker: Only return orders for this ticker.
         :param limit: Number of items to return. The API caps this at 50.
@@ -339,7 +339,7 @@ class Client:
     def get_dividends(self, cursor=None, ticker=None, limit=None):
         """
         Get a page of paid out dividends.
-        https://t212public-api-docs.redoc.ly/#operation/dividends
+        https://github.com/clincha/trading212-api-py/blob/main/documentation/Historical%20Items.md#get-dividends
         :param cursor: Pagination cursor, taken from the 'nextPagePath' of a previous page.
         :param ticker: Only return dividends for this ticker.
         :param limit: Number of items to return. The API caps this at 50.
@@ -354,7 +354,7 @@ class Client:
     def get_transactions(self, cursor=None, time_from=None, limit=None):
         """
         Get a page of transactions to and from the account.
-        https://t212public-api-docs.redoc.ly/#operation/transactions
+        https://github.com/clincha/trading212-api-py/blob/main/documentation/Historical%20Items.md#get-transactions
         :param cursor: Pagination cursor, taken from the 'nextPagePath' of a previous page.
         :param time_from: ISO-8601 timestamp to retrieve transactions from.
         :param limit: Number of items to return. The API caps this at 50.
@@ -369,7 +369,7 @@ class Client:
     def get_exports(self):
         """
         Get a list of the CSV exports requested for the account.
-        https://t212public-api-docs.redoc.ly/#operation/getReports
+        https://github.com/clincha/trading212-api-py/blob/main/documentation/Historical%20Items.md#get-exports
         :return: A list of exports, each with its status and download link.
         """
         return self.make_backoff_request(
@@ -382,7 +382,7 @@ class Client:
         """
         Request a CSV export of the account history. The export is queued, so poll get_exports
         until its status is 'Finished' to pick up the download link.
-        https://t212public-api-docs.redoc.ly/#operation/requestReport
+        https://github.com/clincha/trading212-api-py/blob/main/documentation/Historical%20Items.md#request-export
         :param time_from: ISO-8601 timestamp for the start of the exported period.
         :param time_to: ISO-8601 timestamp for the end of the exported period.
         :param include_dividends: Whether to include dividends in the export.
