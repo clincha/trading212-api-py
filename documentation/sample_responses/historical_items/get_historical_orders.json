@@ -1,36 +1,77 @@
 {
   "items": [
     {
-      "id": 3428956871,
-      "parentOrder": 0,
-      "ticker": "AAPL_US_EQ",
-      "type": "MARKET",
-      "status": "FILLED",
-      "executor": "API",
-      "dateCreated": "2026-08-06T13:42:11.000+03:00",
-      "dateModified": "2026-08-06T13:42:12.000+03:00",
-      "dateExecuted": "2026-08-06T13:42:12.000+03:00",
-      "fillId": 1899234771,
-      "fillType": "TOTV",
-      "fillPrice": 213.47,
-      "fillCost": 213.47,
-      "fillResult": 0.0,
-      "filledQuantity": 1.0,
-      "filledValue": 164.92,
-      "orderedQuantity": 1.0,
-      "orderedValue": null,
-      "limitPrice": null,
-      "stopPrice": null,
-      "timeValidity": null,
-      "taxes": [
-        {
-          "fillId": "1899234771",
-          "name": "CURRENCY_CONVERSION_FEE",
-          "quantity": 0.25,
-          "timeCharged": "2026-08-06T13:42:12.000+03:00"
+      "order": {
+        "id": 32500210180,
+        "strategy": "VALUE",
+        "type": "MARKET",
+        "ticker": "RPIl_EQ",
+        "status": "FILLED",
+        "value": 200.0,
+        "filledValue": 200.0,
+        "currency": "EUR",
+        "extendedHours": false,
+        "initiatedFrom": "WEB",
+        "side": "BUY",
+        "createdAt": "2025-06-14T16:22:55.000Z",
+        "instrument": {
+          "ticker": "RPIl_EQ",
+          "name": "Raspberry PI",
+          "isin": "GB00BS3DYQ52",
+          "currency": "GBX"
         }
-      ]
+      },
+      "fill": {
+        "id": 32650200365,
+        "quantity": 33.4188685,
+        "price": 506.5,
+        "type": "TRADE",
+        "tradingMethod": "OTC",
+        "filledAt": "2025-06-16T07:15:03.000Z",
+        "walletImpact": {
+          "currency": "EUR",
+          "netValue": 200.0,
+          "fxRate": 85.18699997,
+          "taxes": [
+            {
+              "name": "STAMP_DUTY_RESERVE_TAX",
+              "quantity": -1.0,
+              "currency": "EUR",
+              "chargedAt": "2025-06-16T07:15:03.151Z"
+            },
+            {
+              "name": "CURRENCY_CONVERSION_FEE",
+              "quantity": -0.3,
+              "currency": "EUR",
+              "chargedAt": "2025-06-16T07:15:03.137Z"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "order": {
+        "id": 53150556569,
+        "strategy": "QUANTITY",
+        "type": "STOP",
+        "ticker": "AAPL_US_EQ",
+        "quantity": 1.0,
+        "filledQuantity": 0,
+        "stopPrice": 260.0,
+        "status": "CANCELLED",
+        "currency": "EUR",
+        "extendedHours": false,
+        "initiatedFrom": "API",
+        "side": "BUY",
+        "createdAt": "2026-08-09T05:43:00.000Z",
+        "instrument": {
+          "ticker": "AAPL_US_EQ",
+          "name": "Apple",
+          "isin": "US0378331005",
+          "currency": "USD"
+        }
+      }
     }
   ],
-  "nextPagePath": "/api/v0/equity/history/orders?cursor=3428956871&ticker=AAPL_US_EQ&limit=50"
+  "nextPagePath": "/api/v0/equity/history/orders?cursor=32500210180&limit=50"
 }

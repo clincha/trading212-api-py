@@ -23,18 +23,30 @@ class TestHistoricalItems(unittest.TestCase):
         page = self.client.get_historical_orders()
 
         self.assert_page(page)
-        for order in page["items"]:
-            self.assertIn("id", order)
-            self.assertIn("ticker", order)
-            self.assertIn("status", order)
+        for item in page["items"]:
+            self.assertIn("order", item)
+            self.assertIn("id", item["order"])
+            self.assertIn("ticker", item["order"])
+            self.assertIn("status", item["order"])
 
     def test_get_historical_orders_by_ticker(self):
         page = self.client.get_historical_orders(ticker="AAPL_US_EQ", limit=5)
 
         self.assert_page(page)
         self.assertLessEqual(len(page["items"]), 5)
-        for order in page["items"]:
-            self.assertEqual(order["ticker"], "AAPL_US_EQ")
+        for item in page["items"]:
+            self.assertEqual(item["order"]["ticker"], "AAPL_US_EQ")
+
+    def test_get_historical_orders_filled_item_carries_a_fill(self):
+        page = self.client.get_historical_orders(limit=50)
+
+        filled = [item for item in page["items"] if item["order"]["status"] == "FILLED"]
+        if not filled:
+            self.skipTest("no filled orders in this account's history")
+        for item in filled:
+            self.assertIn("fill", item)
+            self.assertIn("price", item["fill"])
+            self.assertIn("filledAt", item["fill"])
 
     def test_get_dividends(self):
         page = self.client.get_dividends()
@@ -55,6 +67,7 @@ class TestHistoricalItems(unittest.TestCase):
             self.assertIn("amount", transaction)
             self.assertIn("dateTime", transaction)
 
+    @unittest.skip("CSV exports are rejected on demo accounts with not-available-in-demo-account")
     def test_get_exports(self):
         exports = self.client.get_exports()
 
@@ -64,6 +77,7 @@ class TestHistoricalItems(unittest.TestCase):
             self.assertIn("status", export)
             self.assertIn("dataIncluded", export)
 
+    @unittest.skip("CSV exports are rejected on demo accounts with not-available-in-demo-account")
     def test_request_export(self):
         time_to = datetime.datetime.now(datetime.timezone.utc)
         time_from = time_to - datetime.timedelta(days=1)

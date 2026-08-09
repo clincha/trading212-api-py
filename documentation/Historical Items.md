@@ -7,6 +7,10 @@ one. The cursor can be pulled out of that path and passed back in as the `cursor
 The API caps `limit` at 50 items per page and rate limits these endpoints to 6 requests per minute,
 so a full history walk is slow by design.
 
+The two CSV export calls are **live accounts only**. On a demo account both return 403
+`not-available-in-demo-account`, so the tests covering them are skipped and their examples below
+come from the API specification rather than a captured response.
+
 ## Get Historical Orders
 
 ```python
@@ -26,44 +30,89 @@ All arguments are optional: a pagination cursor, a ticker to filter by, and a pa
 A page of historical orders. Unlike `get_orders`, this covers orders that have already filled or
 been cancelled, and includes fill details and the taxes charged.
 
+Each entry in `items` is a wrapper, not an order: the order itself sits under an `order` key, and an
+entry for an order that filled carries a second `fill` key holding the execution price, the trading
+method and the taxes charged. Entries for orders that never filled have no `fill` key at all.
+
 **Example:**
 
 ```json
 {
   "items": [
     {
-      "id": 3428956871,
-      "parentOrder": 0,
-      "ticker": "AAPL_US_EQ",
-      "type": "MARKET",
-      "status": "FILLED",
-      "executor": "API",
-      "dateCreated": "2026-08-06T13:42:11.000+03:00",
-      "dateModified": "2026-08-06T13:42:12.000+03:00",
-      "dateExecuted": "2026-08-06T13:42:12.000+03:00",
-      "fillId": 1899234771,
-      "fillType": "TOTV",
-      "fillPrice": 213.47,
-      "fillCost": 213.47,
-      "fillResult": 0.0,
-      "filledQuantity": 1.0,
-      "filledValue": 164.92,
-      "orderedQuantity": 1.0,
-      "orderedValue": null,
-      "limitPrice": null,
-      "stopPrice": null,
-      "timeValidity": null,
-      "taxes": [
-        {
-          "fillId": "1899234771",
-          "name": "CURRENCY_CONVERSION_FEE",
-          "quantity": 0.25,
-          "timeCharged": "2026-08-06T13:42:12.000+03:00"
+      "order": {
+        "id": 32500210180,
+        "strategy": "VALUE",
+        "type": "MARKET",
+        "ticker": "RPIl_EQ",
+        "status": "FILLED",
+        "value": 200.0,
+        "filledValue": 200.0,
+        "currency": "EUR",
+        "extendedHours": false,
+        "initiatedFrom": "WEB",
+        "side": "BUY",
+        "createdAt": "2025-06-14T16:22:55.000Z",
+        "instrument": {
+          "ticker": "RPIl_EQ",
+          "name": "Raspberry PI",
+          "isin": "GB00BS3DYQ52",
+          "currency": "GBX"
         }
-      ]
+      },
+      "fill": {
+        "id": 32650200365,
+        "quantity": 33.4188685,
+        "price": 506.5,
+        "type": "TRADE",
+        "tradingMethod": "OTC",
+        "filledAt": "2025-06-16T07:15:03.000Z",
+        "walletImpact": {
+          "currency": "EUR",
+          "netValue": 200.0,
+          "fxRate": 85.18699997,
+          "taxes": [
+            {
+              "name": "STAMP_DUTY_RESERVE_TAX",
+              "quantity": -1.0,
+              "currency": "EUR",
+              "chargedAt": "2025-06-16T07:15:03.151Z"
+            },
+            {
+              "name": "CURRENCY_CONVERSION_FEE",
+              "quantity": -0.3,
+              "currency": "EUR",
+              "chargedAt": "2025-06-16T07:15:03.137Z"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "order": {
+        "id": 53150556569,
+        "strategy": "QUANTITY",
+        "type": "STOP",
+        "ticker": "AAPL_US_EQ",
+        "quantity": 1.0,
+        "filledQuantity": 0,
+        "stopPrice": 260.0,
+        "status": "CANCELLED",
+        "currency": "EUR",
+        "extendedHours": false,
+        "initiatedFrom": "API",
+        "side": "BUY",
+        "createdAt": "2026-08-09T05:43:00.000Z",
+        "instrument": {
+          "ticker": "AAPL_US_EQ",
+          "name": "Apple",
+          "isin": "US0378331005",
+          "currency": "USD"
+        }
+      }
     }
   ],
-  "nextPagePath": "/api/v0/equity/history/orders?cursor=3428956871&ticker=AAPL_US_EQ&limit=50"
+  "nextPagePath": "/api/v0/equity/history/orders?cursor=32500210180&limit=50"
 }
 ```
 
@@ -85,6 +134,10 @@ All arguments are optional: a pagination cursor, a ticker to filter by, and a pa
 
 A page of dividends paid out to the account. `amount` is in the account currency and
 `grossAmountPerShare` is in the instrument currency.
+
+The example below comes from the API specification rather than a captured response — the demo
+account this was verified against has never been paid a dividend, so the endpoint returns an
+empty `items` list there.
 
 **Example:**
 
@@ -133,12 +186,13 @@ Trades are not transactions; those come from `get_historical_orders`.
   "items": [
     {
       "type": "DEPOSIT",
-      "reference": "d-19238471",
-      "amount": 500.0,
-      "dateTime": "2026-07-30T18:24:53.000+03:00"
+      "amount": 50000.0,
+      "currency": "EUR",
+      "reference": "920b1a43-b03c-4249-b022-6e160688c532",
+      "dateTime": "2019-06-03T18:52:50.000Z"
     }
   ],
-  "nextPagePath": "/api/v0/history/transactions?cursor=c3e50994-7d6f-47c0-b3f9-40f8ba1733f6&limit=50"
+  "nextPagePath": null
 }
 ```
 
