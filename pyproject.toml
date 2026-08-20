@@ -30,5 +30,5 @@ build-backend = "setuptools.build_meta"
 [dependency-groups]
 dev = [
     "pytest>=9.1.1",
-    "python-dotenv>=1.2.2",
+    "python-dotenv>=1.2.3",
 ]
